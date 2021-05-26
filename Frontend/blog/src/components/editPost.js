@@ -12,7 +12,7 @@ const EditPost = (props) => {
   const [content, setContent] = useState();
 
   const inputTitleRef = useRef();
-  
+
  
 
   useEffect(() => {
@@ -28,8 +28,6 @@ const EditPost = (props) => {
   const handleBody = (data) => {
     setContent(data);
   };
-
-
 
   const titleValue = (title) => {
     if (!title) {
@@ -57,9 +55,9 @@ const EditPost = (props) => {
  
     var data = { id, title, content };
     try {
-      axios.post("http://localhost:3001/posts/update", data).then((res) => {
+      axios.post("http://localhost:3001/post/update", data).then((res) => {
         props.sendGetRequest();
-        window.location.replace("/ShowPosts");
+        window.location.replace("/");
       });
     } catch (error) {
       console.log(error);
@@ -71,16 +69,11 @@ const EditPost = (props) => {
   return (
     <section className="section-1 addPost">
       <div className="main-container">
-        <div>
-          <Link className="logo-link">
-            <img src="images/logo.png" alt="Logo" className="logo" />
-          </Link>
-        </div>
-
+      
         <div className="blog-form">
           <form>
             <div className="form-group">
-              <label for="inputTitle">Title</label>
+              <h3>Title</h3>
               <input
                 value={titleValue(title)}
                 onChange={(e) => setTitle(e.target.value)}
@@ -93,7 +86,7 @@ const EditPost = (props) => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="inputContent">Content</label>
+              <h3>Content</h3>
               <ReactQuill
                 value={quillValue(content)}
                 className="border border-dark"
@@ -115,7 +108,7 @@ const EditPost = (props) => {
               <h3>Save</h3>
             </button>
           </form>
-          )
+    
         </div>
         
       </div>

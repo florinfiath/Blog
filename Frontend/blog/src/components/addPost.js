@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ReactQuill from "react-quill";
+import "../css/style.css";
 const axios = require('axios').default;
 
 
@@ -20,7 +21,7 @@ const handleBody = (e) => {
 const setPost = async (postTitle, postContent) => {
   try{
     axios
-    .post("http://localhost:3001/posts/",{
+    .post("http://localhost:3001/post/",{
       title: postTitle,
       content: postContent
     })
@@ -37,7 +38,8 @@ const setPostOnClick = async () => {
     titleRef.current.value,
     contentRef.current.value
   );
-  setTitle("")
+  setTitle("");
+  
 };
 
     return (
@@ -66,9 +68,10 @@ const setPostOnClick = async () => {
               id="inputContent"
             />
           </div>
-           <Link to="/showPosts">
+           <Link to="/">
               <button
-                onClick={() => setPostOnClick()}
+                onClick={() => {setPostOnClick();props.sendGetRequest()}
+                }
                 type="button"
                 className="btn btn-primary mt-5"
               >Save

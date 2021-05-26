@@ -8,9 +8,9 @@ const {
     addPost,
     getPost,
     deletePost,
-    updatePost} = require("..controller/postController");
+    updatePosts} = require("../controllers/postController");
 router.route("/").get(getPost).post(addPost).delete(deletePost);
-router.route("/update").post(updatePost);
+router.route("/update").post(updatePosts);
 
 
 module.exports = router;
