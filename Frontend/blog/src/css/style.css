@@ -9,13 +9,6 @@ body {
   background: #f1f1f1;
 }
 
-/* Header/Blog Title */
-.header {
-  padding: 30px;
-  font-size: 40px;
-  text-align: center;
-  background: white;
-}
 
 /* Create two unequal columns that floats next to each other */
 /* Left column */
@@ -31,18 +24,19 @@ body {
   padding-left: 20px;
 }
 
-/* Fake image */
-.img {
-  background-color: #aaa;
-  width: 100%;
-  padding: 20px;
+/* arrange images */
+.images {
+ float: left;
+ height: auto;
+  padding: 5px;
 }
 
 /* Add a card effect for articles */
 .card {
-   background-color: white;
+   background-color: rgb(187, 184, 184);
    padding: 20px;
    margin-top: 20px;
+  
 }
 
 /* Clear floats after the columns */
@@ -61,7 +55,7 @@ body {
 }
 
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 600px) {
   .leftcolumn, .rightcolumn {   
     width: 100%;
     padding: 0;

@@ -18,7 +18,7 @@ exports.getPost = (req, res, next) => {
 
 exports.addPost = (req, res, next) => {
   try {
-    //check if req.body(post name, title ....)is empty?, then respond with and error
+    //check if req.body(post title and content)is empty?, then respond with and error
     if (isEmpty(req.body)) {
       //respond with an error message
       const error = new Error("INVALID REQUEST MESSAGE");
