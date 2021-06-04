@@ -34,7 +34,7 @@ body {
 /* Add a card effect for articles */
 .card {
    background-color: rgb(187, 184, 184);
-   padding: 20px;
+   padding: 15px;
    margin-top: 20px;
   
 }
@@ -52,6 +52,10 @@ body {
   text-align: center;
   background: #ddd;
   margin-top: 20px;
+}
+
+a {
+  text-decoration: none;
 }
 
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */

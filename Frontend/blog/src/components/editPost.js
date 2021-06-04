@@ -16,7 +16,7 @@ const EditPost = (props) => {
  
 
   useEffect(() => {
-    const foundPostToEdit = props.edit.find((post) => post.id === id);
+    const foundPostToEdit = props.edit.find((post) => post._id === id);
 
     if (foundPostToEdit && id) {
       console.log(foundPostToEdit);
@@ -31,7 +31,7 @@ const EditPost = (props) => {
 
   const titleValue = (title) => {
     if (!title) {
-      const foundPostToEdit = props.edit.find((post) => post.id === id);
+      const foundPostToEdit = props.edit.find((post) => post._id === id);
       if (foundPostToEdit) {
         return foundPostToEdit.title;
       }
@@ -42,7 +42,7 @@ const EditPost = (props) => {
 
   const quillValue = (quillContent) => {
     if (!quillContent) {
-      const foundPostToEdit = props.edit.find((post) => post.id === id);
+      const foundPostToEdit = props.edit.find((post) => post._id === id);
       if (foundPostToEdit) {
         return foundPostToEdit.content;
       }
@@ -51,11 +51,11 @@ const EditPost = (props) => {
     }
   };
 
-  const updateBlogs = async (id, title, content) => {
+  const updateBlogs = async (title, content) => {
  
-    var data = { id, title, content };
+    var data = {title, content };
     try {
-      axios.post("http://localhost:3001/post/update", data).then((res) => {
+      axios.put(`http://localhost:3001/post/${id}`, data).then((res) => {
         props.sendGetRequest();
         window.location.replace("/");
       });
@@ -100,7 +100,7 @@ const EditPost = (props) => {
 
             <button
               onClick={() => {
-                updateBlogs(id, title, content);
+                updateBlogs(title, content);
               }}
               type="button"
               className="btn btn-primary mt-5"

@@ -10,7 +10,7 @@ const PostDetails = (props) => {
     const deletePostOnClick = async (id) => {
       try {
         axios
-          .delete("http://localhost:3001/post", {
+          .delete(`http://localhost:3001/post/${id}`, {
             data: { id: id },
           })
           .then((response) => props.sendGetRequest(response.data));
@@ -29,12 +29,12 @@ const PostDetails = (props) => {
               dangerouslySetInnerHTML={{ __html: foundPost.content }}
               className="card-text"
             ></p>
-            <Link className="p-5" to={`/editPost/${foundPost.id}`}>
+            <Link className="p-5" to={`/editPost/${foundPost._id}`}>
               <button className="btn btn-primary mt-5 postButton">Edit</button>
             </Link>
             <button
               onClick={() => {
-                deletePostOnClick(foundPost.id);
+                deletePostOnClick(foundPost._id);
               }}
                className="btn btn-primary mt-5 postButton"
             >

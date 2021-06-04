@@ -43,7 +43,7 @@ return (
       </Route>
       <Route path="/postDetails/:id"
       render = {(props) => {
-        let onepost = post.find(post => post.id === props.match.params.id)
+        let onepost = post.find(post => post._id === props.match.params.id)
         if (onepost) {
           return (
             <PostDetails
