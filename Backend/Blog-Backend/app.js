@@ -17,6 +17,9 @@ dotenv.config();
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const postsRouter = require("./routes/post");
+const Post = require("./models/Post");
+const { validateInputs } = require("./middleware/validator");
+const postValidationRules = require("./lib/validation/postRules");
 
 
 // set CORS security for the client website 

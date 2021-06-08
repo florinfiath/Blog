@@ -20,6 +20,8 @@ const App = () => {
     useEffect(()=>{
         sendGetRequest()
     }, []);
+
+    
     
     const sendGetRequest = async () => {
         try { 
