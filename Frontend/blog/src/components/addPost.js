@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory} from 'react-router-dom';
 import ReactQuill from "react-quill";
 import "../css/style.css";
 const axios = require('axios').default;
@@ -8,10 +8,12 @@ const axios = require('axios').default;
 
 const AddPost = (props) => {
 
-   const [title, setTitle] = useState("")
+   const [title, setTitle] = useState("");
+   const [errors, setErrors] = useState("");
 
    const titleRef = useRef();
    const contentRef = useRef();
+   let history = useHistory();
 
 const handleBody = (e) => {
   console.log(e);
@@ -20,31 +22,66 @@ const handleBody = (e) => {
 
 const setPost = async (postTitle, postContent) => {
   try{
-    axios
+    const response = await axios
     .post("http://localhost:3001/post/",{
       title: postTitle,
       content: postContent
     })
-    .then((response) =>{
-      props.sendGetRequest({title})
-    })  
+     await props.sendGetRequest({title});
+      console.log("response is :" + JSON.stringify(response));
+     
 } catch(error) {
-  console.log(error)
+  console.log(error);
+  throw(error);
 }
 };
 
 const setPostOnClick = async () => {
-  setPost(
+
+  try{
+    await setPost(
     titleRef.current.value,
     contentRef.current.value
   );
   setTitle("");
-  
+  props.sendGetRequest();
+  //history.push('./showPosts')
+  }catch(error) {
+    console.log(error.response.data);
+    setErrors(error.response.data);
+  }
 };
 
     return (
-      <div className="">
-        <form>
+      <div className="blog-form">
+        <div className="blog-form">
+          {errors && (
+            <div className="errors">
+              <h1>There are some errors below:</h1> <br />
+              {/* <pre> {JSON.stringify(errors, null, 2)}</pre> */}
+              <ul>
+                {errors["errors"]
+                  .map((error) => Object.entries(error))
+                  .map((element) => (
+                    <li>
+                      {element[0][0]} - {element[0][1]}
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          )}
+        </div>
+        {/* {errors
+          ? errors
+              .map((error) => Object.entries(error))
+              .map((element) => (
+                <li key={Math.random()}>
+                  {element[0][0]} - {element[0][1]}
+                </li>
+              ))
+          : console.log("no error")} */}
+
+        <form method="post">
           <div class="form-group">
             <h3>Add a New Post</h3>
             <p>Title:</p>
@@ -68,15 +105,16 @@ const setPostOnClick = async () => {
               id="inputContent"
             />
           </div>
-           <Link to="/">
-              <button
-                onClick={() => {setPostOnClick();props.sendGetRequest()}
-                }
-                type="button"
-                className="btn btn-primary mt-5"
-              >Save
-              </button>
-              </Link>
+          <Link to="/">
+            <button
+              onClick={() => {
+                setPostOnClick();
+                ;
+              }}
+              className="btn btn-primary mt-5">
+              Save
+            </button>
+          </Link>
         </form>
       </div>
     );

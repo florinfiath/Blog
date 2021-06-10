@@ -20,7 +20,11 @@ const Header = () => {
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <li class="nav-item nav-link active">
+            <form className="nav-item nav-link active">
+              <p>Enter your name :</p>
+              <input type="text" className="form-control" onChange={(event) => localStorage.setItem("user", event.target.value)} />
+            </form>
+            <li className="nav-item nav-link active">
               <Link to="/" className="nav-item nav-link active">
                 MySite
               </Link>
