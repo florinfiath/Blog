@@ -5,7 +5,6 @@ const validateInputs = (someRules) => {
     ...someRules,
     (req, res, next) => {
       const errors = validationResult(req);
-
       if (errors.isEmpty()) {
         return next();
       }

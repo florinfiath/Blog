@@ -10,6 +10,7 @@ const AddPost = (props) => {
 
    const [title, setTitle] = useState("");
    const [errors, setErrors] = useState("");
+   const [body, setBody] = useState("");
 
    const titleRef = useRef();
    const contentRef = useRef();
@@ -43,12 +44,14 @@ const setPostOnClick = async () => {
     titleRef.current.value,
     contentRef.current.value
   );
-  setTitle("");
+  setBody("")
+  // setTitle("");
   props.sendGetRequest();
-  //history.push('./showPosts')
+  history.push('/')
   }catch(error) {
-    console.log(error.response.data);
     setErrors(error.response.data);
+    console.log(error.response.data);
+   
   }
 };
 
@@ -71,17 +74,7 @@ const setPostOnClick = async () => {
             </div>
           )}
         </div>
-        {/* {errors
-          ? errors
-              .map((error) => Object.entries(error))
-              .map((element) => (
-                <li key={Math.random()}>
-                  {element[0][0]} - {element[0][1]}
-                </li>
-              ))
-          : console.log("no error")} */}
-
-        <form method="post">
+        <form>
           <div class="form-group">
             <h3>Add a New Post</h3>
             <p>Title:</p>
@@ -105,8 +98,8 @@ const setPostOnClick = async () => {
               id="inputContent"
             />
           </div>
-          <Link to="/">
             <button
+              type="button"
               onClick={() => {
                 setPostOnClick();
                 ;
@@ -114,7 +107,6 @@ const setPostOnClick = async () => {
               className="btn btn-primary mt-5">
               Save
             </button>
-          </Link>
         </form>
       </div>
     );
@@ -157,3 +149,7 @@ AddPost.formats = [
 ];
 
 export default AddPost;
+
+
+
+
