@@ -7,7 +7,6 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 
-
 //DEPENDENCIES FROM LOWDB
 
 // const low = require("lowdb");
@@ -18,28 +17,31 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const postsRouter = require("./routes/post");
 const Post = require("./models/Post");
+const User = require("./models/User");
 const { validateInputs } = require("./middleware/validator");
 const postValidationRules = require("./lib/validation/postRules");
+const userValidationRules = require("./lib/validation/userRules");
 
-
-// set CORS security for the client website 
+// set CORS security for the client website
 const { setCors } = require("./middleware/security");
-
 
 /** INIT */
 const app = express();
 
 /** LOGGING */
 app.use(logger("dev"));
-
+// let connectionString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.5jwqg.mongodb.net/Blog?retryWrites=true&w=majority`;
 /**CONNECT TO DB */
-mongoose.connect(
-  `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.5jwqg.mongodb.net/mediaStore?retryWrites=true&w=majority`,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect(process.env.DB_STRING, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+  console.log("Successfully connected to the database ");
+});
 
 // SETTING UP LOWDB database
 // const adapter = new FileSync("data/db.json");
@@ -53,9 +55,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// set CORS 
+// set CORS
 app.use(setCors);
-
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "jade");
 /** STATIC FILES*/
 app.use(express.static(path.join(__dirname, "public")));
 

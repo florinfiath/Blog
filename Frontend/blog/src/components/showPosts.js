@@ -51,7 +51,7 @@ const ShowPosts = (props) => {
           </div>
           <div className="card">
             <a href="https://en.wikipedia.org/wiki/Bran_Castle" target="_blank">
-              {" "}
+              
               <h3>Dracula’s Castle and Brasov city</h3>
             </a>
 

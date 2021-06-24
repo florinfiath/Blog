@@ -1,19 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
-import { Link, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 
 const axios = require("axios").default;
 
 const EditPost = (props) => {
   const { id } = useParams();
 
-  
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
-
-  const inputTitleRef = useRef();
-
- 
+  
 
   useEffect(() => {
     const foundPostToEdit = props.edit.find((post) => post._id === id);
@@ -21,34 +17,12 @@ const EditPost = (props) => {
     if (foundPostToEdit && id) {
       console.log(foundPostToEdit);
       setTitle(foundPostToEdit.title);
-      console.log(foundPostToEdit.content);
+      setContent(foundPostToEdit.content);
     }
-  }, []);
+  }, [id, props.edit]);
 
   const handleBody = (data) => {
     setContent(data);
-  };
-
-  const titleValue = (title) => {
-    if (!title) {
-      const foundPostToEdit = props.edit.find((post) => post._id === id);
-      if (foundPostToEdit) {
-        return foundPostToEdit.title;
-      }
-    } else {
-      return title;
-    }
-  };
-
-  const quillValue = (quillContent) => {
-    if (!quillContent) {
-      const foundPostToEdit = props.edit.find((post) => post._id === id);
-      if (foundPostToEdit) {
-        return foundPostToEdit.content;
-      }
-    } else {
-      return quillContent;
-    }
   };
 
   const updateBlogs = async (title, content) => {
@@ -75,9 +49,8 @@ const EditPost = (props) => {
             <div className="form-group">
               <h3>Title</h3>
               <input
-                value={titleValue(title)}
+                value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                ref={inputTitleRef}
                 type="text"
                 className="form-control border border-dark"
                 id="inputTitle"
@@ -88,7 +61,7 @@ const EditPost = (props) => {
             <div className="form-group">
               <h3>Content</h3>
               <ReactQuill
-                value={quillValue(content)}
+                value={content}
                 className="border border-dark"
                 placeholder="write something amazing..."
                 modules={EditPost.modules}
