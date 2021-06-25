@@ -12,34 +12,46 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 
-import Header from "./components/header";
-import AddPost from "./components/addPost";
-import PostDetails from "./components/postDetails";
-import ShowPosts from "./components/showPosts";
-import EditPost from "./components/editPost";
+import Home from "./components/home";
+import AddPost from "./components/posts/addPost";
+import ShowPosts from "./components/posts/showPosts";
+import PostDetails from "./components/posts/postDetails";
+import EditPost from "./components/posts/editPost";
+import ShowUser from "./components/users/showUser";
+import UserDetails from "./components/users/userDetails";
 
-const axios = require("axios").default;
+import axios from "axios";
 
 const App = () => {
   const [post, setPost] = useState([]);
-  console.log(post);
-  const [userData, setUserData] = useState({
+  const [user, setUser] = useState({
     token: undefined,
     user: undefined,
   });
-  useEffect(() => {
-    sendGetRequest();
-  }, []);
+
   const sendGetRequest = async () => {
     try {
-      await axios.get("http://localhost:3001/post").then((response) => {
-        console.log("line 39", response.data);
-        setPost(response.data);
-      });
+      const postsdata = await axios.get("http://localhost:3001/post");
+      setPost(postsdata.data);
     } catch (err) {
       console.error(err);
     }
   };
+  const sendUserGetRequest = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/users");
+      setUser(response.data);
+      console.log(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    sendGetRequest();
+  }, []);
+  useEffect(() => {
+    sendUserGetRequest();
+  }, []);
 
   // const  checkLoggedIn = async() =>{
   //   let token = localStorage.getItem("auth-token");
@@ -50,7 +62,7 @@ const App = () => {
 
   return (
     <Router>
-      <Header />
+      <Home />
       <Switch>
         <Route exact path="/">
           <ShowPosts show={post} />
@@ -69,6 +81,27 @@ const App = () => {
                 <PostDetails
                   showPostDetails={onepost}
                   sendGetRequest={sendGetRequest}
+                />
+              );
+            } else {
+              return <Redirect to="/" />;
+            }
+          }}
+        ></Route>
+        <Route exact path="/">
+          <ShowUser show={user} />
+        </Route>
+        <Route
+          path="/userDetails/:id"
+          render={(props) => {
+            let oneuser = user.find(
+              (user) => user.id === props.match.params.id
+            );
+            if (oneuser) {
+              return (
+                <UserDetails
+                  showUserDetails={oneuser}
+                  sendUserGetRequest={sendUserGetRequest}
                 />
               );
             } else {

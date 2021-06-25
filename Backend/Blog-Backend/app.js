@@ -61,7 +61,15 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 /** STATIC FILES*/
 app.use(express.static(path.join(__dirname, "public")));
-
+// !Allow any domain to send request
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 /** ROUTES */
 app.use("/", indexRouter);
 app.use("/users", usersRouter);

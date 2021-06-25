@@ -1,15 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-
 const ShowPosts = (props) => {
-
   return (
     <div className="container">
       <div className="row">
         <div className=" leftcolumn img-fluid max-width: 100% height: auto">
           <div className="card">
-            <h3>Reasons why you should visit Transylvania</h3>
+            <h3>Reasons why you should visit Transylvania?</h3>
           </div>
           <div className="card">
             <h3>Transfagarsan </h3>
@@ -51,7 +49,6 @@ const ShowPosts = (props) => {
           </div>
           <div className="card">
             <a href="https://en.wikipedia.org/wiki/Bran_Castle" target="_blank">
-              
               <h3>Dracula’s Castle and Brasov city</h3>
             </a>
 
@@ -65,7 +62,6 @@ const ShowPosts = (props) => {
                   width="300"
                 />
               </div>
-             
             </div>
             <p>
               Autumn is a colored season, but it is the Halloween and spicy
