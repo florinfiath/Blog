@@ -19,7 +19,8 @@ import PostDetails from "./components/posts/postDetails";
 import EditPost from "./components/posts/editPost";
 import ShowUser from "./components/users/showUser";
 import UserDetails from "./components/users/userDetails";
-
+import UserRegister from "./components/users/registerUser";
+import Login from "./components/users/login";
 import axios from "axios";
 
 const App = () => {
@@ -113,7 +114,7 @@ const App = () => {
           {post && <EditPost edit={post} sendGetRequest={sendGetRequest} />}
         </Route>
       </Switch>
-      <p>Thanks for visiting, goodbye {localStorage.getItem("user")}</p>
+      {/* <p>Thanks for visiting, goodbye {localStorage.getItem("user")}</p> */}
     </Router>
   );
 };

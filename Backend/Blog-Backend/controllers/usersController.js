@@ -43,7 +43,7 @@ exports.updateUser = async (req, res, next) => {
   }
 };
 // SIGNING UP
-exports.addUser = async (req, res, next) => {
+exports.addNewUser = async (req, res, next) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

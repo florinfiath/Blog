@@ -8,14 +8,14 @@ const {
   getUser,
   updateUser,
   deleteUser,
-  addUser,
+  addNewUser,
   loginUser,
 } = require("../controllers/usersController");
 
 router
   .route("/")
   .get(getUsers)
-  .post(validateInputs(userValidationRules), addUser);
+  .post(validateInputs(userValidationRules), addNewUser);
 
 // ROUTE FOR LOGIN
 router.route("/login").post(loginUser);

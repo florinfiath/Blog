@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import {
@@ -18,15 +18,30 @@ const Login = () => {
   const handleCloseSignIn = () => setsignIn(false);
   const handlesignIn = () => setsignIn(true);
 
-  const onSignUp = (e) => {
-    e.preventDefault();
-    const data = {
-      email: e.target.email.value,
-      password: e.target.password.value,
-      confirmPassword: e.target.confirmPassword.value,
-    };
-    console.log(data);
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
+  // USER SIGN IN 
+  const loginUser = async () => {
+    console.log(emailRef.current.value);
+    try {
+      axios
+        .post("http://localhost:3001/users/login", {
+          email: emailRef.current.value,
+          password: passwordRef.current.value,
+        })
+        .then((resp) => {
+          console.log(resp.data);
+          localStorage.setItem("token", resp.data.token);
+          localStorage.setItem("user", JSON.stringify(resp.data.user));
+          window.location.replace("/");
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  
 
   return (
     <Container>
@@ -56,7 +71,7 @@ const Login = () => {
         </Modal.Header>
         <Container>
           <Modal.Body>
-            <form onSubmit={onSignUp}>
+            <form onSubmit={signUp}>
               <label for="email" className="labelClass">
                 Email:
               </label>
@@ -110,24 +125,26 @@ const Login = () => {
           <Modal.Title className="modalTitle mb-4">Sign In</Modal.Title>
         </Modal.Header>
         <Modal.Body className="modalBody">
-          <label for="email" className="labelClass">
-            Email:
-          </label>
-          <input
-            className="inputClass"
-            id="email"
-            name="email"
-            placeholder="enter your email"
-          />
-          <label for="password" className="labelClass">
-            Password:
-          </label>
-          <input
-            className="inputClass"
-            id="password"
-            name="password"
-            placeholder="enter your password"
-          />
+          <form onSubmit={loginUser}>
+            <label for="email" className="labelClass">
+              Email:
+            </label>
+            <input
+              className="inputClass"
+              id="email"
+              name="email"
+              placeholder="enter your email"
+            />
+            <label for="password" className="labelClass">
+              Password:
+            </label>
+            <input
+              className="inputClass"
+              id="password"
+              name="password"
+              placeholder="enter your password"
+            />
+          </form>
         </Modal.Body>
         <Modal.Footer>
           <Button

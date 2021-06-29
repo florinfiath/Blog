@@ -1,10 +1,8 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import Login from "./login";
-
-import axios from "axios";
+import Login from "../components/users/login";
 
 const Home = () => {
   return (
@@ -28,7 +26,7 @@ const Home = () => {
           <div className="floatright">
             <li className="nav-item nav-link active">
               <Link to="/" className="nav-item nav-link active">
-                MySite
+                Home
               </Link>
             </li>
             <li class="nav-item nav-link">
